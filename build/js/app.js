@@ -9,7 +9,7 @@ Simon.prototype.nextColor = function() {
   var randIndex = Math.floor(Math.random() * 4);
   this.gameArray.push(this.colors[randIndex]);
   return this.gameArray;
-}
+};
 
 Simon.prototype.compare = function() {
   var length = this.playerArray.length;
@@ -21,13 +21,13 @@ Simon.prototype.compare = function() {
       this.gameArray = [];
     }
   }
-  if (this.gameArray.length === length && output == undefined) {
+  if (this.gameArray.length === length && output === undefined) {
     this.playerArray = [];
     output = "success";
   }
   console.log(output);
   return output;
-}
+};
 
 exports.simonModule = Simon;
 
@@ -35,6 +35,7 @@ exports.simonModule = Simon;
 var Simon = require('./../js/simon.js').simonModule;
 
 $(document).ready(function() {
+  $('#time').text(moment());
   var game = new Simon();
 
   function showSequence() {
@@ -78,6 +79,20 @@ $(document).ready(function() {
     $(this).removeClass('opaque');
   });
 
+});
+
+var apiKey = "532354385b64b7b961b27c505a6176cf"
+
+$(document).ready(function() {
+  $('#weatherLocation').click(function() {
+    var city = $('#location').val();
+    $('#location').val("");
+    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey).then(function(response){
+      $('.showWeather').text("The humidity in " + city + " is " + response.main.humidity + "%");
+    }).fail(function(error) {
+      $('.showWeather').text(error.responseJSON.message);
+    });
+  });
 });
 
 },{"./../js/simon.js":1}]},{},[2]);

@@ -1,6 +1,7 @@
 var Simon = require('./../js/simon.js').simonModule;
 
 $(document).ready(function() {
+  $('#time').text(moment());
   var game = new Simon();
 
   function showSequence() {
